@@ -1,0 +1,11 @@
+{
+    "name": "thiagosol-web",
+    "version": "1.0.0",
+    "description": "Thiago Sol, sou eu",
+    "scripts": {
+        "build": "tsc"
+    },
+    "devDependencies": {
+        "typescript": "^5.3.3"
+    }
+}

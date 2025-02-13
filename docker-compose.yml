@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  thiagosol-web:
+    image: thiagosol-web
+    pull_policy: never
+    restart: always
+    container_name: thiagosol-web
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.thiagosol-web.entrypoints=http"
+      - "traefik.http.routers.thiagosol-web.rule=Host(`thiagosol.com`) || Host(`www.thiagosol.com`)"
+      - "traefik.http.routers.thiagosol-web-secure.entrypoints=https"
+      - "traefik.http.routers.thiagosol-web-secure.rule=Host(`thiagosol.com`) || Host(`www.thiagosol.com`)"
+      - "traefik.http.routers.thiagosol-web-secure.tls=true"
+      - "traefik.http.routers.thiagosol-web-secure.service=thiagosol-web-secure"
+      - "traefik.http.services.thiagosol-web-secure.loadbalancer.server.port=80"
+      - "traefik.docker.network=proxy"
+    deploy:
+      resources:
+        limits:
+          memory: 50M
+
+networks:
+  default:
+    external:
+     name: external-sol-apis
